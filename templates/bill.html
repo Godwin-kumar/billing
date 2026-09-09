@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Restaurant Bill</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="bill-container">
+
+
+    <!-- =========================
+         RESTAURANT HEADER
+    ========================== -->
+
+    <div class="bill-header">
+
+        <h1>
+            {{ restaurant_name }}
+        </h1>
+
+        <p>
+            {{ restaurant_address }}
+        </p>
+
+        <p>
+            Phone: {{ restaurant_phone }}
+        </p>
+
+        <h2>
+            RESTAURANT BILL
+        </h2>
+
+    </div>
+
+
+    <!-- =========================
+         BILL INFORMATION
+    ========================== -->
+
+    <div class="bill-info">
+
+        <div>
+
+            <strong>
+                Bill No:
+            </strong>
+
+            {{ bill_number }}
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ITEMS
+    ========================== -->
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>
+                    Item
+                </th>
+
+                <th>
+                    Price
+                </th>
+
+                <th>
+                    Qty
+                </th>
+
+                <th>
+                    Amount
+                </th>
+
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            {% for item in bill_items %}
+
+            <tr>
+
+                <td>
+                    {{ item.name }}
+                </td>
+
+                <td>
+                    ₹{{ "%.2f"|format(item.price) }}
+                </td>
+
+                <td>
+                    {{ item.quantity }}
+                </td>
+
+                <td>
+                    ₹{{ "%.2f"|format(item.amount) }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+
+    <!-- =========================
+         BILL SUMMARY
+    ========================== -->
+
+    <div class="summary">
+
+
+        <!-- SUBTOTAL -->
+
+        <div class="summary-row">
+
+            <span>
+                Subtotal
+            </span>
+
+            <span>
+                ₹{{ "%.2f"|format(subtotal) }}
+            </span>
+
+        </div>
+
+
+        <!-- DISCOUNT -->
+
+        {% if discount > 0 %}
+
+        <div class="summary-row discount">
+
+            <span>
+                Discount ({{ discount_percentage }}%)
+            </span>
+
+            <span>
+                - ₹{{ "%.2f"|format(discount) }}
+            </span>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- TOTAL -->
+
+        <div class="summary-row total">
+
+            <span>
+                Total Payable
+            </span>
+
+            <span>
+                ₹{{ "%.2f"|format(total) }}
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <div class="bill-footer">
+
+        <p>
+            Thank You!
+        </p>
+
+        <p>
+            Visit Again 😊
+        </p>
+
+    </div>
+
+
+    <!-- =========================
+         BUTTONS
+    ========================== -->
+
+    <div class="buttons">
+
+
+        <!-- PRINT BILL -->
+
+        <button
+            onclick="window.print()"
+            class="print-button"
+        >
+
+            Print Bill
+
+        </button>
+
+
+        <!-- NEW BILL -->
+
+        <a
+            href="{{ url_for('admin_billing') }}"
+            class="back-button"
+        >
+
+            New Bill
+
+        </a>
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="back-button"
+        >
+
+            Dashboard
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

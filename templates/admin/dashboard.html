@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard-container">
+
+
+    <!-- =========================
+         DASHBOARD HEADER
+    ========================== -->
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h1>
+                Admin Dashboard
+            </h1>
+
+            <p>
+                Welcome, {{ username }}
+            </p>
+
+        </div>
+
+
+        <a
+            href="{{ url_for('admin_logout') }}"
+            class="logout-button"
+        >
+
+            Logout
+
+        </a>
+
+    </div>
+
+
+    <!-- =========================
+         DASHBOARD CARDS
+    ========================== -->
+
+    <div class="dashboard-cards">
+
+
+        <!-- Total Products -->
+
+        <div class="dashboard-card">
+
+            <h3>
+                Total Products
+            </h3>
+
+            <p>
+                {{ total_products }}
+            </p>
+
+        </div>
+
+
+        <!-- Available Products -->
+
+        <div class="dashboard-card">
+
+            <h3>
+                Available Products
+            </h3>
+
+            <p>
+                {{ available_products }}
+            </p>
+
+        </div>
+
+
+        <!-- Total Bills -->
+
+        <div class="dashboard-card">
+
+            <h3>
+                Total Bills
+            </h3>
+
+            <p>
+                {{ total_bills }}
+            </p>
+
+        </div>
+
+
+        <!-- Total Sales -->
+
+        <div class="dashboard-card">
+
+            <h3>
+                Total Sales
+            </h3>
+
+            <p>
+                ₹{{ "%.2f"|format(total_sales) }}
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         DASHBOARD ACTIONS
+    ========================== -->
+
+    <div class="dashboard-actions">
+
+
+        <!-- Manage Products -->
+
+        <a
+            href="{{ url_for('admin_products') }}"
+        >
+
+            Manage Products
+
+        </a>
+
+
+        <!-- Open Billing -->
+
+        <a
+            href="{{ url_for('admin_billing') }}"
+        >
+
+            Open Billing
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

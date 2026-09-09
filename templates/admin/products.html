@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Products</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="products-container">
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <div class="page-header">
+
+        <div>
+
+            <h1>
+                Manage Products
+            </h1>
+
+            <p>
+                Add and update restaurant products
+            </p>
+
+        </div>
+
+
+        <a href="{{ url_for('admin_dashboard') }}">
+
+            Dashboard
+
+        </a>
+
+    </div>
+
+
+
+    <!-- =========================
+         ADD PRODUCT
+    ========================== -->
+
+    <div class="add-product-card">
+
+        <h2>
+            Add Product
+        </h2>
+
+
+        <form
+            method="POST"
+            action="{{ url_for('add_product') }}"
+        >
+
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Product name"
+                required
+            >
+
+
+            <input
+                type="text"
+                name="category"
+                placeholder="Category"
+                required
+            >
+
+
+            <input
+                type="number"
+                name="price"
+                placeholder="Price"
+                min="0"
+                step="0.01"
+                required
+            >
+
+
+            <button type="submit">
+
+                Add Product
+
+            </button>
+
+
+        </form>
+
+    </div>
+
+
+
+    <!-- =========================
+         PRODUCT TABLE
+    ========================== -->
+
+    <div class="product-list-card">
+
+        <h2>
+            Product List
+        </h2>
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        ID
+                    </th>
+
+                    <th>
+                        Name
+                    </th>
+
+                    <th>
+                        Category
+                    </th>
+
+                    <th>
+                        Price
+                    </th>
+
+                    <th>
+                        Status
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+
+            <tbody>
+
+
+                {% for product in products %}
+
+
+                <tr>
+
+
+                    <!-- ID -->
+
+                    <td>
+
+                        {{ product.id }}
+
+                    </td>
+
+
+
+                    <!-- NAME -->
+
+                    <td>
+
+                        {{ product.name }}
+
+                    </td>
+
+
+
+                    <!-- CATEGORY -->
+
+                    <td>
+
+                        {{ product.category }}
+
+                    </td>
+
+
+
+                    <!-- PRICE -->
+
+                    <td>
+
+                        ₹{{ "%.2f"|format(product.price) }}
+
+                    </td>
+
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+
+                        {% if product.is_available %}
+
+
+                            <span class="available">
+
+                                Available
+
+                            </span>
+
+
+                        {% else %}
+
+
+                            <span class="unavailable">
+
+                                Unavailable
+
+                            </span>
+
+
+                        {% endif %}
+
+
+                    </td>
+
+
+
+                    <!-- ACTION -->
+
+                    <td>
+
+
+                        <a
+                            href="{{ url_for('edit_product', product_id=product.id) }}"
+                            class="edit-button"
+                        >
+
+                            Edit
+
+                        </a>
+
+
+
+                        <a
+                            href="{{ url_for('toggle_product', product_id=product.id) }}"
+                            class="toggle-button"
+                        >
+
+
+                            {% if product.is_available %}
+
+                                Disable
+
+                            {% else %}
+
+                                Enable
+
+                            {% endif %}
+
+
+                        </a>
+
+
+                    </td>
+
+
+                </tr>
+
+
+                {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+    </div>
+
+
+
+    <!-- =========================
+         BOTTOM LINKS
+    ========================== -->
+
+    <div class="bottom-links">
+
+
+        <a href="{{ url_for('admin_dashboard') }}">
+
+            Back to Dashboard
+
+        </a>
+
+
+        |
+
+
+        <a href="{{ url_for('admin_logout') }}">
+
+            Logout
+
+        </a>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
